@@ -1,22 +1,28 @@
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
-import { getCookie, setCookie } from 'hono/cookie';
+import { cors } from 'hono/cors';
 
 const app = new Hono()
 
-app.get('/image', async (c) => {
-  if (getCookie(c, 'thirdPartyCookie') == null) {
-    setCookie(c, 'thirdPartyCookie', 'value2', {
-      httpOnly: true,
-    });
-  }
 
-  // 画像を返す
-  const response = await fetch('https://picsum.photos/200/300');
-  const arrayBuffer = await response.arrayBuffer();
-  return c.body(arrayBuffer, 200, {
-    'Content-Type': 'image/jpeg'
-  });
+app.use(
+  '/*',
+  cors({
+    origin: 'https://lemon-things-trade.loca.lt', // corsを許可するorigin
+    allowMethods: ['POST'],
+  })
+)
+
+app.post('/data', async (c) => {
+  return c.json({
+    message: 'some json response',
+    status: '201',
+    data: {
+      id: 1,
+      name: 'some json response name',
+      description: 'some json response description'
+    }
+  })
 });
 
 const port = 3000
