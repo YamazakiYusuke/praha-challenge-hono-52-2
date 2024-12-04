@@ -12,7 +12,6 @@ const __dirname = dirname(__filename);
 
 app.get('/image1', async (c) => {
   const filePath = join(__dirname, '..', 'resource', 'sample.jpeg');
-  console.log("Constructed file path:", filePath);
   const buffer = fs.readFileSync(filePath);
   const arrayBuffer = new Uint8Array(buffer).buffer;
   
@@ -24,7 +23,6 @@ app.get('/image1', async (c) => {
 
 app.get('/image2', async (c) => {
   const filePath = join(__dirname, '..', 'resource', 'sample.jpeg');
-  console.log("Constructed file path:", filePath);
   const buffer = fs.readFileSync(filePath);
   const arrayBuffer = new Uint8Array(buffer).buffer;
   
